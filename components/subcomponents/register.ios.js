@@ -14,6 +14,7 @@ import {
 import t from 'tcomb-form-native';
 import i18n from 'tcomb-form-native/lib/i18n/en';
 import templates from 'tcomb-form-native/lib/templates/bootstrap';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 // Import Styles
 import formStyles from '../../public/styles/formStyles.js';
@@ -49,17 +50,26 @@ class Register extends Component {
         'email': '',
         'password': ''
       },
+      visible: false 
     }
   }
   
   // Firebase registration
   register() {
+    this.setState({
+      visible: true
+    })
     firebase.auth().createUserWithEmailAndPassword(
       this.state.value.email,
       this.state.value.password
-    ).then(function() {
-      Alert.alert("suge:", 'Your account was created!');
-    }).catch(function(error) {
+    ).then(() => {
+      this.setState({
+        visible: false
+      })
+    }).catch((error) => {
+      this.setState({
+        visible: false
+      })
       switch(error.code){
         case "auth/email-already-in-use":
           Alert.alert("Surge:", "The new user account cannot be created because the email is already in use.");
@@ -71,7 +81,7 @@ class Register extends Component {
           Alert.alert("Surge:", "Your password is too weak.")
         break;
         default:
-          Alert.alert("Surge:", "Error creating user: " + error.code);
+          Alert.alert("Surge:", "Error creating user: " + error.message);
       }
     });
   }
@@ -84,6 +94,7 @@ class Register extends Component {
   render() {
     return (
       <View style={authStyles.container}>
+        <Spinner visible={this.state.visible} />
         <Text style={{color: '#fff', fontSize: 50, fontWeight: 'bold', paddingBottom: 30}}>register.</Text>
         <Form
           ref="form"

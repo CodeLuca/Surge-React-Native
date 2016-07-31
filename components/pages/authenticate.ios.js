@@ -13,7 +13,27 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Login from '../subcomponents/login.ios.js'
 import Register from '../subcomponents/register.ios.js'
 
+// Import Styles
+import authLayoutStyles from '../../public/styles/authLayoutStyles.js';
+
 class Authenticate extends Component {
+  
+  componentDidMount() {
+    // activate authentication listener
+    this.login();
+  }
+  
+  login() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // Redirect to Profile Page.
+        this.props.navigator.immediatelyResetRouteStack([{
+          id: 'Profile'
+        }])
+      }
+    });
+  }
+  
   render() {
     return (
       <View style={{flex: 1}}>
@@ -27,7 +47,7 @@ class Authenticate extends Component {
           index={1}
         >
           <View style={styles.slide1}>
-            <Login />
+            <Login navigator={this.props.navigator} />
           </View>
           <View style={styles.slide2}>
             <View style={{flexDirection: 'row'}}>
@@ -59,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#37474F',
+    backgroundColor: '#455A64',
   },
   slide3: {
     flex: 1,

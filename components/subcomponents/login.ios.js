@@ -14,6 +14,7 @@ import {
 import t from 'tcomb-form-native';
 import i18n from 'tcomb-form-native/lib/i18n/en';
 import templates from 'tcomb-form-native/lib/templates/bootstrap';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 // Import Styles
 import formStyles from '../../public/styles/formStyles.js';
@@ -52,27 +53,15 @@ class Login extends Component {
     }
   }
   
-  // Firebase registration
-  register() {
-    firebase.auth().createUserWithEmailAndPassword(
+  // Firebase authentication
+  login() {
+    firebase.auth().signInWithEmailAndPassword(
       this.state.value.email,
       this.state.value.password
     ).then(function() {
-      Alert.alert("suge:", 'Your account was created!');
+      Alert.alert("suge:", 'You logged in!');
     }).catch(function(error) {
-      switch(error.code){
-        case "auth/email-already-in-use":
-          Alert.alert("Surge:", "The new user account cannot be created because the email is already in use.");
-        break;
-        case "auth/invalid-email":
-          Alert.alert("Surge:", "The specified email is not a valid email.");
-        break;
-        case "auth/weak-password":
-          Alert.alert("Surge:", "Your password is too weak.")
-        break;
-        default:
-          Alert.alert("Surge:", "Error creating user: " + error.code);
-      }
+        Alert.alert("Surge:", "Error logging in: " + error.message);
     });
   }
   
@@ -84,6 +73,7 @@ class Login extends Component {
   render() {
     return (
       <View style={authStyles.container}>
+        <Spinner visible={this.state.visible} />
         <Text style={{color: '#fff', fontSize: 50, fontWeight: 'bold', paddingBottom: 30}}>login.</Text>
         <Form
           ref="form"
@@ -92,7 +82,7 @@ class Login extends Component {
           value={this.state.value}
           onChange={this.onChange.bind(this)}
         />
-        <TouchableHighlight style={authStyles.button} onPress={this.register.bind(this)} underlayColor='#99d9f4'>
+        <TouchableHighlight style={authStyles.button} onPress={this.login.bind(this)} underlayColor='#99d9f4'>
           <Text style={authStyles.buttonText}>submit</Text>
         </TouchableHighlight>
       </View>

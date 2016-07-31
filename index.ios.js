@@ -6,6 +6,7 @@ import { Navigator, Text, AppRegistry } from 'react-native';
 // Import Routes
 import OnBoarding from './components/pages/onboarding.ios.js'
 import Authenticate from './components/pages/authenticate.ios.js'
+import Profile from './components/pages/profile.ios.js'
 
 // Setup Fireabse
 import firebase from 'firebase';
@@ -22,10 +23,6 @@ firebase.initializeApp(config);
 class Surge extends Component {
   constructor() {
     super();
-    // Disactivate navigation for now...
-    this.state = {
-      'navHidden': true
-    }
   }
   
   // Navigation Render
@@ -37,6 +34,8 @@ class Surge extends Component {
         return(<OnBoarding navigator={navigator} title="OnBoarding" />)
       case 'Authenticate':
         return(<Authenticate navigator={navigator} title='Authenticate' />)
+      case 'Profile':
+        return(<Profile navigator={navigator} title='Profile' />)
     }
   }
   
@@ -45,10 +44,10 @@ class Surge extends Component {
     return (
       <Navigator
         initialRoute={{
-          id:'OnBoarding'
+          id: 'Authenticate'
         }}
         renderScene={
-          this.navigatorRenderScene
+          this.navigatorRenderScene.bind(this)
         }
       />
     )
