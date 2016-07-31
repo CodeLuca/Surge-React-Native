@@ -1,16 +1,16 @@
 'use strict';
 
-var LABEL_COLOR = '#fff';
-var INPUT_COLOR = '#fff';
-var ERROR_COLOR = '#B0BEC5';
-var HELP_COLOR = '#999999';
-var BORDER_COLOR = '#CFD8DC';
-var DISABLED_COLOR = '#777777';
-var DISABLED_BACKGROUND_COLOR = '#eeeeee';
-var FONT_SIZE = 17;
-var FONT_WEIGHT = '500';
+const LABEL_COLOR = '#fff';
+const INPUT_COLOR = '#fff';
+const ERROR_COLOR = '#B0BEC5';
+const HELP_COLOR = '#999999';
+const BORDER_COLOR = '#CFD8DC';
+const DISABLED_COLOR = '#777777';
+const DISABLED_BACKGROUND_COLOR = '#eeeeee';
+const FONT_SIZE = 17;
+const FONT_WEIGHT = '500';
 
-var stylesheet = Object.freeze({
+const formStyles = Object.freeze({
   fieldset: {},
   // the style applied to the container of all inputs
   formGroup: {
@@ -173,4 +173,4 @@ var stylesheet = Object.freeze({
   }
 });
 
-module.exports = stylesheet;
+module.exports = formStyles;

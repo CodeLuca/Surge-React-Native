@@ -1,6 +1,6 @@
 'use strict';
 
-var stylesheet = Object.freeze({
+const stylesheet = Object.freeze({
   fieldset: {},
     container: {
       padding: 20,

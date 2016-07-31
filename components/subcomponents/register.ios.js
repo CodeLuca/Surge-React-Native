@@ -10,25 +10,28 @@ import {
   Alert
 } from 'react-native';
 
-// Import components
-import Nav from '../layout/nav.ios.js';
+// Import 3rd party components
 import t from 'tcomb-form-native';
-import stylesheet from '../../public/styles/form.js';
+import i18n from 'tcomb-form-native/lib/i18n/en';
+import templates from 'tcomb-form-native/lib/templates/bootstrap';
+
+// Import Styles
+import formStyles from '../../public/styles/formStyles.js';
 import authStyles from '../../public/styles/authStyles.js';
 
+// Import Firebase
 import firebase from 'firebase';
 
-const i18n = require('tcomb-form-native/lib/i18n/en');
-const templates = require('tcomb-form-native/lib/templates/bootstrap');
-
+// Setup Form
 const Form = t.form.Form;
 const Person = t.struct({
         email: t.String,
         password: t.String,
       });
 
+// Form Options
 const options = {
-  stylesheet: stylesheet,
+  stylesheet: formStyles,
   auto: 'placeholders',
   fields: {
     password: {
@@ -40,6 +43,7 @@ const options = {
 class Register extends Component {
   constructor() {
     super();
+    // Set placeholder states.
     this.state = {
       value: {
         'email': '',
@@ -48,6 +52,7 @@ class Register extends Component {
     }
   }
   
+  // Firebase registration
   register() {
     firebase.auth().createUserWithEmailAndPassword(
       this.state.value.email,
@@ -71,6 +76,7 @@ class Register extends Component {
     });
   }
   
+  // Check if any form values change
   onChange(value) {
     this.setState({value});
   }
